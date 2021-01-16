@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CinemasController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,5 +17,12 @@ Route::middleware(['web', 'auth'])->group(function () {
             'movies' => 'MoviesController',
             'sessions' => 'SessionsController'
         ]);
+    });
+
+    Route::middleware(['customer'])->group( function () {
+        Route::get('/', [ SearchController::class, 'index' ]);
+        Route::post('/sessions/search', [ SearchController::class, 'search' ]);
+        Route::get('/sessions/booking/{id}', [ SearchController::class, 'booking' ]);
+        Route::post('/sessions/booking/{id}', [ SearchController::class, 'book' ]);
     });
 });
