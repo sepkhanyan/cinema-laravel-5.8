@@ -18,8 +18,7 @@ class SearchController extends Controller
     {
 
         $like = $request['title'] . '%';
-        $sessions = Session::where('start_time', '>', Carbon::now())
-            ->whereHas('movie', function ($query) use($like){
+        $sessions = Session::whereHas('movie', function ($query) use($like){
             $query->where('title', 'like', $like);
         })->get();
 
@@ -56,8 +55,8 @@ class SearchController extends Controller
             $data['sit'] = $sit;
 
             $booking = Booking::create($data);
-
-            return view('customers.index');
         }
+
+        return view('customers.index');
     }
 }
